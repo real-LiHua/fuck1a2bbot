@@ -26,5 +26,5 @@ async def callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
             if compare(candidate, item[0]) != item[1]:
                 break
         else:
-            await msg.reply_text(candidate)
+            await msg.reply_text("".join(candidate))
             break
