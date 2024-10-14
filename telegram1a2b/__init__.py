@@ -18,12 +18,7 @@ def compare(x, y):
 
 async def callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     msg = update.effective_message.reply_to_message
-    if not msg:
-        return
-    if msg.text.startswith("游戏开始啦，猜测目标："):
-        await msg.reply_text("8964")
-        return
-    if not msg.text.startswith("猜测历史："):
+    if not msg or not msg.text.startswith("猜测历史："):
         return
     filters = re.findall(r"(\d+) (\dA\dB)", msg.text)
     for candidate in permutations(map(str, range(10)), len(filters[0][0])):
@@ -31,4 +26,5 @@ async def callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
             if compare(candidate, item[0]) != item[1]:
                 break
         else:
-            await msg.reply_text(item[0])
+            await msg.reply_text(candidate)
+            break
