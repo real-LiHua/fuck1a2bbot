@@ -7,6 +7,8 @@ from telegram.ext import ContextTypes
 
 
 def compare(x, y):
+    if x == y:
+        return
     a = b = 0
     for i in range(len(x)):
         if x[i] == y[i]:
@@ -21,10 +23,13 @@ async def callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not msg or not msg.text.startswith("猜测历史："):
         return
     filters = re.findall(r"(\d+) (\dA\dB)", msg.text)
-    for candidate in permutations(map(str, range(10)), len(filters[0][0])):
+
+    for candidate in map(
+        "".join, permutations(map(str, range(10)), len(filters[0][0]))
+    ):
         for item in filters:
             if compare(candidate, item[0]) != item[1]:
                 break
         else:
-            await msg.reply_text("".join(candidate))
+            await msg.reply_text(candidate)
             break
