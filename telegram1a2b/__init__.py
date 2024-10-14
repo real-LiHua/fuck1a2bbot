@@ -25,9 +25,8 @@ async def callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     if not msg.text.startswith("猜测历史："):
         return
-    for candidate in permutations(
-        map(str, range(10)), len(re.findall(r"(\d+) (\dA\dB)", msg.text)[0][0])
-    ):
+    filters = re.findall(r"(\d+) (\dA\dB)", msg.text)
+    for candidate in permutations(map(str, range(10)), len(filters[0][0])):
         for item in filters:
             if compare(candidate, item[0]) != item[1]:
                 break
