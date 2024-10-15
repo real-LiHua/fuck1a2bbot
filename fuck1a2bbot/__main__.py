@@ -31,5 +31,5 @@ application: Application = (
     .build()
 )
 
-application.add_handler(CommandHandler("/fuck1a2b", callback))
+application.add_handler(CommandHandler("fuck1a2b", callback))
 application.run_polling(allowed_updates=Update.ALL_TYPES)
