@@ -31,7 +31,7 @@ async def callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     result: list = []
     for candidate in map("".join, permutations(digits, len(filters[0][0]))):
         for item in filters:
-            if candidate == item[0] and compare(candidate, item[0]) != item[1]:
+            if candidate != item[0] and compare(candidate, item[0]) != item[1]:
                 break
         else:
             result.append(candidate)
