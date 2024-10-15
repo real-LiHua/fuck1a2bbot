@@ -26,7 +26,7 @@ async def callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     text: str = update.effective_message.text
-    flag: int = int(text.split()[1]) if len(text.split()) >= 2 else 0
+    flag: int = int(text.split()[1]) if len(text.split()) >= 2 else 1
 
     result: list = []
     for candidate in map("".join, permutations(digits, len(filters[0][0]))):
@@ -35,8 +35,8 @@ async def callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 break
         else:
             result.append(candidate)
+            flag -= 1
             if not flag:
                 break
-            flag -= 1
     if result:
         await msg.reply_text(" ".join(result))
